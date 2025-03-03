@@ -72,6 +72,7 @@ app.post("/api", express.json(), async (req, res) => {
   
   await server.connect(transport);
   await transport.handlePostMessage(req, res);
+  res.end();  // 这里需要立即结束，某些客户端会等待超时再结束连接
 });
 
 app.listen(8000, () => {
