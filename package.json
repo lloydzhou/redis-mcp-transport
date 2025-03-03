@@ -1,6 +1,6 @@
 {
   "name": "redis-mcp-transport",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Redis-based transport layer for Model Context Protocol with SSE support",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -19,7 +19,11 @@
     "mcp",
     "model-context-protocol",
     "transport",
-    "streaming"
+    "streaming",
+    "multi-session",
+    "multi-user",
+    "llm",
+    "ai-service"
   ],
   "author": "lloydzhou",
   "license": "MIT",
