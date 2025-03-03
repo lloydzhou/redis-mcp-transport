@@ -28,22 +28,27 @@ Redis-MCP-Transport 通过Redis作为消息中间件，使单个MCP服务器能�
 ```
 import express from 'express'
 import { RedisMcpTransport } from 'redis-mcp-transport';
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 const REDIS_URL = 'redis://localhost:6379';
 const app = express();
 
 // 创建MCP服务器实例
 const server = new McpServer({
-  name: "ModelService",
+  name: "EchoService",
   version: "1.0.0",
-  handlers: {
-    completion: async (params) => {
-      // 实现生成文本的逻辑
-      return { content: "这是模型生成的回复" };
-    }
-  }
 });
+
+server.resource(
+  "greeting",
+  new ResourceTemplate("greeting://{name}", { list: undefined }),
+  async (uri, { name }) => ({
+    contents: [{
+      uri: uri.href,
+      text: `Hello, ${name}!`
+    }]
+  })
+);
 
 // SSE连接端点 - 为每个用户创建唯一会话
 app.get("/stream", async (req, res) => {

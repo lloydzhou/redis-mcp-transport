@@ -1,21 +1,26 @@
 import express from 'express'
-import { RedisMcpTransport } from './dist/index.js';
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { RedisMcpTransport } from 'redis-mcp-transport';
+import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 
 const REDIS_URL = 'redis://localhost:6379';
 const app = express();
 
 // 创建MCP服务器实例
 const server = new McpServer({
-  name: "ModelService",
+  name: "EchoService",
   version: "1.0.0",
-  handlers: {
-    completion: async (params) => {
-      // 实现生成文本的逻辑
-      return { content: "这是模型生成的回复" };
-    }
-  }
 });
+
+server.resource(
+  "greeting",
+  new ResourceTemplate("greeting://{name}", { list: undefined }),
+  async (uri, { name }) => ({
+    contents: [{
+      uri: uri.href,
+      text: `Hello, ${name}!`
+    }]
+  })
+);
 
 // SSE连接端点
 app.get("/stream", async (req, res) => {

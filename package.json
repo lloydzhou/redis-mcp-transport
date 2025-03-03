@@ -1,6 +1,6 @@
 {
   "name": "redis-mcp-transport",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Redis-based transport layer for Model Context Protocol with SSE support",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -13,6 +13,13 @@
   "scripts": {
     "build": "rollup -c",
     "test": "jest"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/types.d.ts"
+    }
   },
   "keywords": [
     "redis",
