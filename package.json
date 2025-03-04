@@ -1,10 +1,11 @@
 {
   "name": "redis-mcp-transport",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Redis-based transport layer for Model Context Protocol with SSE support",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/types.d.ts",
+  "files": ["dist"],
   "homepage": "https://github.com/lloydzhou/redis-mcp-transport",
   "repository": {
     "type": "git",

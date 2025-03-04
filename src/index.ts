@@ -91,7 +91,8 @@ export class RedisMcpTransport implements Transport {
   // 走一遍server的onmessage逻辑会触发transport的send方法
   async send(message: JSONRPCMessage): Promise<void> {
     if (!this._isStarted) {
-      await this.start();
+      await this._redisClient.connect();
+      this._isStarted = true;
     }
     const channel = this.getChannelName();
     await this._redisClient.publish(channel, JSON.stringify(message));
